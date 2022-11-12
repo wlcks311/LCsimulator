@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LCsimulator</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+      // window.onlaod = function() {
+      //   var register_btn = document.getElementById("Register");
+      //   register_btn.onclick = function() {
+      //     location.href="/server/register";
+      //   };
+
+      // }
+    </script>
+  </head>
+  <body>
+    <h1>LCsimulator</h1>
+    <p>Welcome to LCsimulator</p>
+    <form action="/server/login" method="POST">
+      id: <input type="text" name="id"><br>
+      passwd: <input type="password" name="passwd">
+      <button type="submit">로그인</button>
+    </form>
+
+    <form action="/server/register" method="GET">
+      <button type="submit">회원가입</button>
+    </form>
+  
+
+  </body>
+</html>
