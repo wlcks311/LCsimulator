@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        window.onload = function() {
+            var Rebutton = document.getElementById('goBack');
+            Rebutton.onclick = function() {
+                history.back();
+            }
+
+            var Home = document.getElementById('home');
+            Home.onclick = function() {
+                window.location = "/";
+            }
+
+        }
+    </script>
+</head>
+<body>
+    상자 결과 화면<br>
+    <img src="/images/code/all/<%= bonusname %>.jpg" alt=""><br>
+    <%= bonusName %> (등급: <%= bonusLevel %>) 및<br>
+    <img src="/images/code/all/<%= name %>.jpg" alt=""><br>
+    <%= name %> (등급: <%= level %>) 획득!
+    <button id="goBack">다시 열어보기</button>
+    <button id="home">홈으로 가기</button>
+</body>
+</html>

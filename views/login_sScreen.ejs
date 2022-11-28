@@ -3,7 +3,12 @@
 <head>
 </head>
 <body>
-    로그인 성공<br>
-    <h1> <%= username %> </h1>
+    로그인 성공 화면<br>
+    <h1> 안녕하세요 <%= username %> 님! </h1><br>
+    <h3>상자 열기-> </h3>
+    <form action="/server/openChest" method="GET">
+        <input type="hidden" name="id" value="<%= username %>">
+        <button type="submit">열기</button>
+    </form>
 </body>
 </html>

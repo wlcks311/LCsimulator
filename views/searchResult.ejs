@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+</head>
+<body>
+    <%= userName %>님의 기록입니다<br>
+    <img src="/images/<%= userName %>.png" alt=""><br>
+    <br>
+    <% result.forEach(element => { %>
+        <% for(var key in element) { %>
+            <%= element[key] %>
+        <% } %> <br>
+    <% }) %>
+</body>
+</html>

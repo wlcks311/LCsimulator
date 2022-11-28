@@ -10,6 +10,9 @@ var serverRouter = require('./sql/server'); //
 var loginRouter = require('./routes/login_s');//로그인
 var registerRouter = require('./routes/register');
 var insertUserRouter = require('./routes/insertUser');
+var searchPageRouter = require('./routes/searchPage');
+var findUserRouter = require('./routes/findUser');
+var openChestRouter = require('./routes/openChest');
 
 var app = express();
 
@@ -26,10 +29,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/server', serverRouter);//
+app.use('/server', serverRouter);
 app.use('/login_s', loginRouter);
 app.use('/register', registerRouter);
 app.use('/insertUser', insertUserRouter);
+app.use('/searchPage', searchPageRouter);
+app.use('/findUser', findUserRouter);
+app.use('/openChest', openChestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
