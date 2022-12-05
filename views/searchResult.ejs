@@ -1,16 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+    <style>
+        body{
+            background-color:#011d2b;
+            margin-bottom: 500px;
+        }
+        div.result{
+            background-color: white;
+            text-align: center;
+            position: absolute;
+            top:10%;
+            left:50%;
+            border-radius: 10px;
+            border: 0px;
+            width:800px;
+            margin-left: -400px;
+            margin-top: 30px;
+            
+        }
+        table.resultTable {
+            display: inline;
+            text-align: center;
+            font-weight: bold;
+            border: black, 1;
+        }
+        .ItemImage {
+            position: absolute;
+            display: none;
+        }
+        .text:hover+ .ItemImage {
+            display: block;
+        }
+        div.levelInfo {
+            border-radius: 20px;
+            display: inline-block;
+            border: 2px solid darkgray;
+            width: fit-content;
+            text-align: center;
+            padding: 5px;
+        }
+        div.logo{
+            position: relative;
+            top: 10px;
+            left: 20px;
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
-    <%= userName %>님의 기록입니다<br>
-    <img src="/images/<%= userName %>.png" alt=""><br>
+    <div class="logo">
+        <h2>LC simulator</h2>
+    </div>
+    <div class="result">
     <br>
-    <% result.forEach(element => { %>
-        <% for(var key in element) { %>
-            <%= element[key] %>
-        <% } %> <br>
-    <% }) %>
+    <h2 style="color:darkslateblue;"><%= userName %>님의 기록</h2><br>
+    <br>
+    마우스를 올리면 사진을 볼 수 있습니다!<br><br>
+    <div class="levelInfo">
+        <p style='display:inline; color: #85C1E9'><img src="/images/code/all/서사.jpg" alt="">: 서사 </p>
+        <p style='display:inline; color: #CB4335'><img src="/images/code/all/전설.jpg" alt="">: 전설 </p>
+        <p style='display:inline; color: #F5B041'><img src="/images/code/all/초월.jpg" alt="">: 초월 </p>
+        <p style='display:inline; color: #7D3C98'><img src="/images/code/all/신화.jpg" alt="">: 신화 </p>
+    </div>
+    <br>
+        <table class="resultTable">
+            <th>품목</th>
+            <th>등급</th>
+            
+            <% result.forEach(element => { %>
+                <tr>
+                <% for(var key in element) { %>
+                    <% if(element[key] == '1') { %>
+                            <td style='color: #2ECC71; width:100px;'>일반</td>
+                    <%  } else if(element[key] == '2') { %>
+                            <td style="width:100px;"><img src="/images/code/all/서사.jpg" alt=""></td>
+                    <% } else if(element[key] == '3') { %>
+                        <td style="width:100px"><img src="/images/code/all/전설.jpg" alt=""></td>
+                    <% }  else if(element[key] == '4') { %>
+                        <td style="width:100px"><img src="/images/code/all/초월.jpg" alt=""></td>
+                    <% } else if(element[key] == '5') { %>
+                        <td style="width:100px"><img src="/images/code/all/신화.jpg" alt=""></td>
+                    <% } else  { %>
+                        <td style="width:400px;"><p class="text"><%= element[key] %></p><img class="ItemImage" src="/images/code/all/<%= element[key] %>.jpg"></td>
+                    <% } %>
+                <% } %>
+                </tr>
+            <% }) %>
+        </table>
+        <div style="padding: 400px;">
+        </div>
+    </div>
+
+    
 </body>
 </html>

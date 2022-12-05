@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <style>
+        body {
+            background-color: #070B19;
+            color:azure;
+            font-weight: bold;
+        }
+        div.welcome{
+            text-align: center;
+            
+        }
+        div.logo{
+        position: relative;
+        top: 10px;
+        left: 20px;
+        color: white;
+        }
+        button.openbtn {
+            border-color: darkgoldenrod;
+            background-color: #070B19;
+            color:gold;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+    </style>
 </head>
 <body>
-    로그인 성공 화면<br>
-    <h1> 안녕하세요 <%= username %> 님! </h1><br>
-    <h3>상자 열기-> </h3>
-    <form action="/server/openChest" method="GET">
-        <input type="hidden" name="id" value="<%= username %>">
-        <button type="submit">열기</button>
-    </form>
+    <div class="logo">
+        <h2>LC simulator</h2>
+      </div>
+    <div class="welcome">
+        <br><br>
+        <h2> 안녕하세요 <%= username %> 님! </h2><br>
+        
+        <img id="chestImg" src="/images/code/all/chestStatic.jpg" alt="">
+            <script>
+                $(function() {
+                    $("#openbtn").hover(
+                        function(){
+                            $("#chestImg").attr("src","/images/code/all/chestAnimation.gif");
+                        },
+                        function() {
+                            $("#chestImg").attr("src", "/images/code/all/chestStatic.jpg");
+                        }
+                    );
+                });
+            </script>
+        <br>
+        <h3> 
+            <form action="/server/openChest" method="GET">
+                <input type="hidden" name="id" value="<%= username %>">
+                <button type="submit" id="openbtn" class="openbtn">상자 열기</button>
+            </form>
+        </h3>
+    </div>
+    
 </body>
 </html>

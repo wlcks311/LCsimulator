@@ -1,7 +1,25 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
+    <style>
+        body {
+            background-color: #011d2b;
+            color:azure;
+            font-weight: bold;
+        }
+        div.chestResult {
+            text-align: center;
+
+        }
+        .box {
+            position: relative;
+            top: 60px;
+        }
+    </style>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script type="text/javascript">
+       
         window.onload = function() {
             var Rebutton = document.getElementById('goBack');
             Rebutton.onclick = function() {
@@ -12,16 +30,48 @@
             Home.onclick = function() {
                 window.location = "/";
             }
-
         }
+        $(document).ready(function() {
+            $('.box').animate({
+                top: 20
+            }, 500);
+        });
+        
     </script>
+    
 </head>
 <body>
-    상자 결과 화면<br>
-    <img src="/images/code/all/<%= name %>.jpg" alt=""><br>
-    <%= name %> (등급: <%= level %> )획득!
-    
-    <button id="goBack">다시 열어보기</button>
-    <button id="home">홈으로 가기</button>
+    <div class="chestResult">
+        <img class="box" src="/images/code/all/<%= name %>.jpg" alt=""><br>
+        <br><br><br>
+        <p id="level">
+             <%= level %><img src="/images/code/all/<%= level %>.jpg" alt="">
+             <script>
+                var resultLevel = document.getElementById('level');
+                if(resultLevel.innerText == "일반") {
+                    console.log("green");
+                    resultLevel.style.color = '#2ECC71';
+                }
+                
+                else if(resultLevel.innerText == "서사") {
+                    resultLevel.style.color = '#85C1E9';
+                }
+                else if(resultLevel.innerText == "전설") {
+                    resultLevel.style.color = '#CB4335';
+                }
+                else if(resultLevel.innerText == "초월") {
+                    resultLevel.style.color = '#F5B041';
+                }
+
+                else { //신화급
+                    resultLevel.style.color = '#7D3C98';
+                }
+             </script>
+        </p>
+        <p> <%= name %> 획득!</p>
+        <br>
+        <button id="goBack">다시 열기</button>
+        <button id="home">홈으로 가기</button>
+    </div>
 </body>
 </html>

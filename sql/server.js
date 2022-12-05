@@ -70,340 +70,247 @@ app.get('/openChest', function(request, response) {
     var userId = request.query.id//body -> query
     console.log(userId);
 
-    if(randNum > 50) { //skin table 사용 하는 경우
-        if(bonusRandNum <= 0.04) {//신화급 스킨 추가 획득 하는 경우
-            conn.query('SELECT name, item_level FROM skin WHERE item_level = \'신화\' ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+    if(bonusRandNum <= 0.04) {//신화급 스킨 추가 획득 하는 경우
+        conn.query('SELECT name, item_level FROM skin WHERE item_level = \'5\' ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
+            conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
+            if(error) throw error;
+            else if(randNum >= 50) {//스킨 파편
+                conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    //return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
+                    if(results[0].item_level == '1') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "일반"});
+                    }
 
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '2') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "서사"});
+                    }
 
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '3') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "전설"});
+                    }
 
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '4') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "초월"});
+                    }
 
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "신화"});
+                    }
+                })
+            }
 
-            })
-            
-            
-        }
+            else if(randNum >= 25) {//챔피언 파편
+                conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "일반"});
+                })
+            }
 
-        else if (bonusRandNum <= 3.64) {//추가로 보석을 얻었을 경우
-            conn.query('SELECT name, item_level FROM Jewel ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else if(randNum >= 15) {//감정표현
+                conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else if(randNum >= 3.5) {// 와드 파편
+                conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else {// 아이콘
+                conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "신화", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-            })
-        }
-
-        else if (bonusRandNum <= 13.64) { //보너스 상자
-            conn.query('SELECT name, item_level FROM BonusChest ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-            })
-        }
-
-        else {//보너스 상품이 없을 경우
-                if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-        }
+        })
+        
+        
     }
 
-    else { // skin2 를 사용하는 경우
-        if(bonusRandNum <= 0.04) {//신화급 스킨 추가 획득 하는 경우
-            conn.query('SELECT name, item_level FROM skin2 WHERE item_level = \'신화\' ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM skin2 ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+    else if (bonusRandNum <= 3.64) {//추가로 보석을 얻었을 경우
+        conn.query('SELECT name, item_level FROM Jewel ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
+            conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
+            if(error) throw error;
+            else if(randNum >= 50) {//스킨 파편
+                conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    //return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
+                    if(results[0].item_level == '1') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                    }
 
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '2') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "서사"});
+                    }
 
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '3') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "전설"});
+                    }
 
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else if(results[0].item_level == '4') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "초월"});
+                    }
 
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+                    else {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "신화"});
+                    }
+                })
+            }
 
-            })
-            
-            
-        }
+            else if(randNum >= 25) {//챔피언 파편
+                conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
 
-        else if (bonusRandNum <= 3.64) {//추가로 보석을 얻었을 경우
-            conn.query('SELECT name, item_level FROM Jewel ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM skin2 ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else if(randNum >= 15) {//감정표현
+                conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else if(randNum >= 3.5) {// 와드 파편
+                conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
+            else {// 아이콘
+                conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
 
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-            })
-        }
-
-        else if (bonusRandNum <= 13.64) { //보너스 상자
-            conn.query('SELECT name, item_level FROM BonusChest ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
-                conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
-                if(error) throw error;
-                else if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM skin2 ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-            })
-        }
-
-        else {//보너스 상품이 없을 경우
-                if(randNum >= 50) {//스킨 파편
-                    conn.query('SELECT name, item_level FROM skin2 ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 25) {//챔피언 파편
-                    conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 15) {//감정표현
-                    conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else if(randNum >= 3.5) {// 와드 파편
-                    conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-
-                else {// 아이콘
-                    conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
-                        conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
-                        return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
-                    })
-                }
-        }
-
+        })
     }
+
+    else if (bonusRandNum <= 13.64) { //보너스 상자
+        conn.query('SELECT name, item_level FROM BonusChest ORDER BY RAND() LIMIT 1', function(error, bonusResults, field) { 
+            conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [bonusResults[0].name, bonusResults[0].item_level, userId]);
+            if(error) throw error;
+            else if(randNum >= 50) {//스킨 파편
+                conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    //return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : bonusResults[0].item_level, name : results[0].name, level : results[0].item_level});
+                    if(results[0].item_level == '1') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                    }
+
+                    else if(results[0].item_level == '2') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "서사"});
+                    }
+
+                    else if(results[0].item_level == '3') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "전설"});
+                    }
+
+                    else if(results[0].item_level == '4') {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "초월"});
+                    }
+
+                    else {
+                        return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "신화"});
+                    }
+                })
+            }
+
+            else if(randNum >= 25) {//챔피언 파편
+                conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
+
+            else if(randNum >= 15) {//감정표현
+                conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
+
+            else if(randNum >= 3.5) {// 와드 파편
+                conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
+
+            else {// 아이콘
+                conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResultWithBonus.ejs', { bonusName : bonusResults[0].name, bonusLevel : "일반", name : results[0].name, level : "일반"});
+                })
+            }
+
+        })
+    }
+
+    else {//보너스 상품이 없을 경우
+            if(randNum >= 50) {//스킨 파편
+                conn.query('SELECT name, item_level FROM Skin ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    //return response.render('ChestResult.ejs', { name : results[0].name, level : results[0].item_level});
+                    if(results[0].item_level == '1') {
+                        return response.render('ChestResult.ejs', { name : results[0].name, level : "일반"});
+                    }
+
+                    else if(results[0].item_level == '2') {
+                        return response.render('ChestResult.ejs', { name : results[0].name, level : "서사"});
+                    }
+
+                    else if(results[0].item_level == '3') {
+                        return response.render('ChestResult.ejs', { name : results[0].name, level : "전설"});
+                    }
+
+                    else if(results[0].item_level == '4') {
+                        return response.render('ChestResult.ejs', { name : results[0].name, level : "초월"});
+                    }
+
+                    else {
+                        return response.render('ChestResult.ejs', { name : results[0].name, level : "신화"});
+                    }
+                })
+            }
+
+            else if(randNum >= 25) {//챔피언 파편
+                conn.query('SELECT name, item_level FROM Champion ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResult.ejs', { name : results[0].name, level : "일반"});
+                })
+            }
+
+            else if(randNum >= 15) {//감정표현
+                conn.query('SELECT name, item_level FROM Emote ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResult.ejs', { name : results[0].name, level : "일반"});
+                })
+            }
+
+            else if(randNum >= 3.5) {// 와드 파편
+                conn.query('SELECT name, item_level FROM Ward ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResult.ejs', { name : results[0].name, level : "일반"});
+                })
+            }
+
+            else {// 아이콘
+                conn.query('SELECT name, item_level FROM Icon ORDER BY RAND() LIMIT 1', function(error, results, field) {
+                    conn.query('INSERT INTO history(item_name, item_level, user_id) VALUES(?, ?, ?)', [results[0].name, results[0].item_level, userId]);
+                    return response.render('ChestResult.ejs', { name : results[0].name, level : "일반"});
+                })
+            }
+    }
+    
 
 
 })

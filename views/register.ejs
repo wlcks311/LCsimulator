@@ -1,13 +1,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+    <style>
+      body{
+        background-color:#011d2b;
+      }
+      div.logo{
+        position: relative;
+        top: 10px;
+        left: 20px;
+        color: white;
+      }
+      div.mainPage{
+        background-color: white;
+        color:slategrey;
+        text-align:center;
+        position: absolute;
+        top:50%;
+        left:50%;
+        border-radius: 20px;
+        border: 0px;
+        width:500px;
+        height:300px;
+        margin-left: -250px;
+        margin-top: -150px;
+      }
+      input.Text {
+        background-color:lightgray;
+        border-radius: 10px;
+        border:  0px;
+        width: 200px;
+        height: 30px;
+      }
+      button.register{
+        background-color: white;
+        color:darkgray;
+        border: 1;
+        border-color: gray;
+        border-radius: 5px;
+        width: 70px;
+        height: 25px;
+      }
+    </style>
+</head>
 <body>
-    <h1>회원가입 페이지</h1>
-    <form action="/server/insertUser" method="post">
-        id: <input type="text" name="id"><br>
-        passwd: <input type="password" name="passwd">
-        <button type="submit">등록</button>
-    </form>
+  <div class="logo">
+    <h2>LC simulator</h2>
+  </div>
+    <div class="mainPage">
+        <br>
+        <h2>회원 가입</h2>
+        <br><br>
+        <form action="/server/insertUser" method="post">
+            <input type="text" name="id" class="Text" placeholder="생성할 ID"><br><br>
+            <input type="password" name="passwd" class="Text" placeholder="PW"><br><br>
+            <button type="submit" class="register">등록</button>
+        </form>
+    </div>
 </body>
 </html>
