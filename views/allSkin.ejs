@@ -1,0 +1,145 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+      body{
+        background-color:#010A13;
+      }
+      div.logo{
+        position: relative;
+        top: 10px;
+        left: 20px;
+        color: white;
+      }
+      div.list{
+        position: absolute;
+        top: 30%;
+        left: 2%;
+        color: white;
+        text-align: center;
+      }
+      div.item{
+        width: 440px;
+        height: 310px;
+        text-align: center;
+        display: inline;
+        float:left;
+        padding: 20px;
+      }
+      div.title{
+        text-align: center;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+
+      }
+      div.levelInfo{
+        position:absolute;
+        top:28%; 
+        left:50%; 
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      img.ItemImage{
+        width: 400px;
+        height: 250px;
+      }
+      div.search{
+            background-color: white;
+            text-align: center;
+            position: absolute;
+            top:15%;
+            left:70%;
+            border-radius: 10px;
+            border: 0px;
+            width:400px;
+            height:40px;
+      }
+      input.searchBox{
+            margin-top: 10px;
+            width: 300px;
+            height: 25px;
+            border: 2px;
+            border-color: darkgrey;
+      }
+      button.sub {
+            width:55px;
+            height: 20px;
+            border: 0px;
+            font-weight: 400;
+            color:darkgray;
+      }
+      form.levelbtn{
+            float:left;
+      }
+      button.levelsymbol{
+        background-color:#010A13;
+      }
+    </style>
+    <script>
+        function goHome() {
+            window.location = "/";
+        }
+    </script>
+</head>
+<body>
+  <div class="logo" onclick="goHome()">
+    <h2>LC simulator</h2>
+  </div>
+  <div class="search">
+    <form action="/server/findSkin" method="post">
+        <input type="searchBox" type="text" name="searchWord" class="searchBox" placeholder="검색할 Skin의 이름을 입력하세요">
+        <button type="submit" class="sub">검색</button>
+    </form>
+  </div>
+  <form action="/server/allSkin" method="GET">
+    <button style="background-color:#010A13;" type="submit"><img style='display:inline; position:absolute; top:15%; left:50%; transform: translate(-50%, -50%);' src="/images/code/all/스킨로고글자.jpg"></button><br>
+  </form>
+    <div class="levelInfo">
+        <form action="/server/showLV1" method="GET" class="levelbtn">
+          <button type="submit" class="levelsymbol"><p style='display:inline; color: #2ECC71'>일반</p></button>
+        </form>
+        <form action="/server/showLV2" method="GET" class="levelbtn">
+          <p style='display:inline; color: #85C1E9'>
+          <button type="submit" class="levelsymbol"><img style="width:20px; height: 20px;" src="/images/code/all/서사.jpg" alt=""></button>
+          : 서사 </p>
+        </form>
+        <form action="/server/showLV3" method="GET" class="levelbtn">
+            <p style='display:inline; color: #CB4335'>
+              <button type="submit" class="levelsymbol"><img style="width:20px; height: 20px;" src="/images/code/all/전설.jpg" alt=""></button>
+              : 전설 </p>
+        </form>
+        <form action="/server/showLV4" method="GET" class="levelbtn">
+          <p style='display:inline; color: #F5B041'>
+            <button type="submit" class="levelsymbol"><img style="width:20px; height: 20px;" src="/images/code/all/초월.jpg" alt=""></button>
+            : 초월 </p>
+        </form>
+        <form action="/server/showLV3" method="GET" class="levelbtn">
+          <p style='display:inline; color: #7D3C98'>
+            <button type="submit" class="levelsymbol"><img style="width:20px; height: 20px;" src="/images/code/all/신화.jpg" alt=""></button>
+            : 신화 </p>
+        </form>
+    </div>
+    <div class="list">
+    <% result.forEach(element => { %>
+            <div class="item">
+                <img class="ItemImage" src="/images/code/all/<%= element['name'] %>.jpg"><br>
+                <% if(element["item_level"] == '1') { %>
+                    <span style='color: #2ECC71; width:fit-content;'>일반</span>
+                <%  } else if(element["item_level"] == '2') { %>
+                    <img src="/images/code/all/서사.jpg" alt="">
+                <% } else if(element["item_level"] == '3') { %>
+                    <img style="width: 18px; height: 18px;" src="/images/code/all/전설.jpg" alt="">
+                <% } else if(element["item_level"] == '4') { %>
+                    <img src="/images/code/all/초월.jpg" alt="">
+                <% } else if(element["item_level"] == '5') { %>
+                    <img style="width: 18px; height: 17px;"src="/images/code/all/신화.jpg" alt="">
+                <% }%>
+                <%= element["name"] %>
+            </div>
+    <% }) %>
+  </div>
+    
+</body>
+</html>

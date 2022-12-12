@@ -13,7 +13,22 @@ var insertUserRouter = require('./routes/insertUser');
 var searchPageRouter = require('./routes/searchPage');
 var findUserRouter = require('./routes/findUser');
 var openChestRouter = require('./routes/openChest');
-
+var itemPageRouter = require('./routes/itemPage');
+var allChampionRouter = require('./routes/allChampion');
+var allEmoteRouter = require('./routes/allEmote');
+var allSkinRouter = require('./routes/allSkin');
+var allWardRouter = require('./routes/allWard');
+var allIconRouter = require('./routes/allIcon');
+var findSkinRouter = require('./routes/findSkin');
+var findChampionRouter = require('./routes/findChampion');
+var findEmoteRouter = require('./routes/findEmote');
+var findIconRouter = require('./routes/findIcon');
+var findWardRouter = require('./routes/findWard');
+var showLV1Router = require('./routes/showLV1');
+var showLV2Router = require('./routes/showLV2');
+var showLV3Router = require('./routes/showLV3');
+var showLV4Router = require('./routes/showLV4');
+var showLV5Router = require('./routes/showLV5');
 var app = express();
 
 // view engine setup
@@ -36,6 +51,23 @@ app.use('/insertUser', insertUserRouter);
 app.use('/searchPage', searchPageRouter);
 app.use('/findUser', findUserRouter);
 app.use('/openChest', openChestRouter);
+app.use('/itemPage', itemPageRouter);
+app.use('/allChampion', allChampionRouter);
+app.use('/allEmote', allEmoteRouter);
+app.use('/allSkin', allSkinRouter);
+app.use('/allWard', allWardRouter);
+app.use('/allIcon', allIconRouter);
+app.use('/findSkin', findSkinRouter);
+app.use('/findChampion', findChampionRouter);
+app.use('/findEmote', findEmoteRouter);
+app.use('/findIcon', findIconRouter);
+app.use('/findWard', findWardRouter);
+app.use('/showLV1', showLV1Router);
+app.use('/showLV2', showLV2Router);
+app.use('/showLV3', showLV3Router);
+app.use('/showLV4', showLV4Router);
+app.use('/showLV5', showLV5Router);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

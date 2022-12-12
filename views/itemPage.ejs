@@ -1,0 +1,62 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+      body{
+        background-color:#010A13;
+      }
+      div.logo{
+        position: relative;
+        display: block;
+        top:10px;
+        width: fit-content;
+        height: fit-content;
+        left: 20px;
+        color: white;
+      }
+      div.items{
+        color: #C69C3A;
+        font-weight: bold;
+      }
+      button {
+        background-color:#010A13;
+      }
+      form {
+        text-align: center;
+      }
+    </style>
+    <script>
+      function goHome() {
+          window.location = "/";
+      }
+    </script>
+</head>
+<body>
+  <div class="logo" onclick="goHome()">
+    <h2>LC simulator</h2>
+  </div>
+  <div class="items">
+    <form style='display:inline; position:absolute; top:40%; left:25%; transform: translate(-50%, -50%);' action="/server/allChampion" method="GET">
+      <button type="submit"><img src="/images/code/all/챔피언로고.jpg" alt="" width="110" height="110"></button><br>
+      <br>챔피언 목록 보기
+    </form>
+    <form style='display:inline; position:absolute; top:40%; left:50%; transform: translate(-50%, -50%);' action="/server/allSkin" method="GET">
+      <button type="submit"><img src="/images/code/all/스킨로고.jpg" alt="" width="110" height="110"></button><br>
+      <br>스킨 목록 보기
+    </form>
+    <form style='display:inline; position:absolute; top:40%; left:75%; transform: translate(-50%, -50%);' action="/server/allEmote" method="GET">
+      <button type="submit"><img src="/images/code/all/감정표현로고.jpg" alt="" width="110" height="110"></button><br>
+      <br>감정표현 목록 보기
+    </form>
+    <form style='display:inline; position:absolute; top:75%; left:37.5%; transform: translate(-50%, -50%);' action="/server/allWard" method="GET">
+      <button type="submit"><img src="/images/code/all/와드로고.jpg" alt="" width="110" height="110"></button><br>
+      <br>와드 목록 보기
+    </form>
+    <form style='display:inline; position:absolute; top:75%; left:62.5%; transform: translate(-50%, -50%);' action="/server/allIcon" method="GET">
+      <button type="submit"><img src="/images/code/all/아이콘로고.jpg" alt="" width="110" height="110"></button><br>
+      <br>아이콘 목록 보기
+    </form>
+  </div>
+</body>
+</html>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script type="text/javascript">
+       
         window.onload = function() {
             var Rebutton = document.getElementById('goBack');
             Rebutton.onclick = function() {
@@ -12,12 +14,17 @@
             Home.onclick = function() {
                 window.location = "/";
             }
-
         }
+        $(document).ready(function() {
+            $('.box').animate({
+                top: 20
+            }, 500);
+        });
+        
     </script>
     <style>
         body {
-            background-color: #011d2b;
+            background-color: #070B19;
             color:azure;
             font-weight: bold;
         }
@@ -25,11 +32,18 @@
             text-align: center;
 
         }
+        button {
+            border-color: darkgoldenrod;
+            background-color: #070B19;
+            color:gold;
+            font-weight: bold;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="chestResult">
-        <img src="/images/code/all/<%= bonusName %>.jpg" alt=""><br>
+        <img class="box" src="/images/code/all/<%= bonusName %>.jpg" alt=""><br>
         <img src="/images/code/all/<%= bonusLevel %>.jpg" alt="">
             <p id="Bonuslevel">
                 <%= bonusLevel %>
@@ -53,7 +67,7 @@
                 </script>
             </p><br>
             <%= bonusName %> 및<br>
-        <img src="/images/code/all/<%= name %>.jpg" alt=""><br>
+        <img class="box" src="/images/code/all/<%= name %>.jpg" alt=""><br>
         <img src="/images/code/all/<%= level %>.jpg" alt="">
             <p id="level">
                 <%= level %>

@@ -12,6 +12,13 @@
             text-align: center;
             
         }
+        div.history{
+            text-align: center;
+        }
+
+        th,td {
+            width: 60px;
+        }
         div.logo{
         position: relative;
         top: 10px;
@@ -25,17 +32,92 @@
             font-weight: bold;
             font-size: 20px;
         }
-        
+        table.level {
+            display: inline;
+            text-align: center;
+            font-weight: bold;
+            border: 0;
+        }
     </style>
+    <script>
+        function goHome() {
+            window.location = "/";
+        }
+    </script>
 </head>
 <body>
-    <div class="logo">
+    <div class="logo" onclick="goHome()">
         <h2>LC simulator</h2>
       </div>
     <div class="welcome">
         <br><br>
         <h2> 안녕하세요 <%= username %> 님! </h2><br>
-        
+        <div class="history">
+            현재 기록: 
+            <table class="level">
+                <th style='color: #2ECC71; width:60px;'>일반</th>
+                <th><img src="/images/code/all/서사.jpg" alt=""></th>
+                <th><img src="/images/code/all/전설.jpg" alt=""></th>
+                <th><img src="/images/code/all/초월.jpg" alt=""></th>
+                <th><img src="/images/code/all/신화.jpg" alt=""></th>
+                <tr>
+                    <td>
+                        <% result.forEach(element => { %>
+                            <% for(var key in element) { %>
+                                <% if(element["item_level"] == '1') { %>
+                                    <%= element["countNum"] %>
+                                    <% break; %>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+
+                    <td>
+                        <% result.forEach(element => { %>
+                            <% for(var key in element) { %>
+                                <% if(element["item_level"] == '2') { %>
+                                    <%= element["countNum"] %>
+                                    <% break; %>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+
+                    <td>
+                        <% result.forEach(element => { %>
+                            <% for(var key in element) { %>
+                                <% if(element["item_level"] == '3') { %>
+                                    <%= element["countNum"] %>
+                                    <% break; %>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+
+                    <td>
+                        <% result.forEach(element => { %>
+                            <% for(var key in element) { %>
+                                <% if(element["item_level"] == '4') { %>
+                                    <%= element["countNum"] %>
+                                    <% break; %>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+
+                    <td>
+                        <% result.forEach(element => { %>
+                            <% for(var key in element) { %>
+                                <% if(element["item_level"] == '5') { %>
+                                    <%= element["countNum"] %>
+                                    <% break; %>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <img id="chestImg" src="/images/code/all/chestStatic.jpg" alt="">
             <script>
                 $(function() {

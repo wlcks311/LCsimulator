@@ -25,6 +25,12 @@
             font-weight: bold;
             border: black, 1;
         }
+        table.level {
+            display: inline;
+            text-align: center;
+            font-weight: bold;
+            border: 0;
+        }
         .ItemImage {
             position: absolute;
             display: none;
@@ -48,14 +54,82 @@
         }
 
     </style>
+    <script>
+        function goHome() {
+            window.location = "/";
+        }
+    </script>
 </head>
 <body>
-    <div class="logo">
+    <div class="logo" onclick="goHome()">
         <h2>LC simulator</h2>
     </div>
     <div class="result">
     <br>
     <h2 style="color:darkslateblue;"><%= userName %>님의 기록</h2><br>
+    <table class="level">
+        <th style='color: #2ECC71; width:60px;'>일반</th>
+        <th style="width:60px;"><img src="/images/code/all/서사.jpg" alt=""></th>
+        <th style="width:60px;"><img src="/images/code/all/전설.jpg" alt=""></th>
+        <th style="width:60px;"><img src="/images/code/all/초월.jpg" alt=""></th>
+        <th style="width:60px;"><img src="/images/code/all/신화.jpg" alt=""></th>
+        <tr>
+            <td style="width:60px;">
+                <% resultc.forEach(element => { %>
+                    <% for(var key in element) { %>
+                        <% if(element["item_level"] == '1') { %>
+                            <%= element["countNum"] %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            </td>
+
+            <td style="width:60px;">
+                <% resultc.forEach(element => { %>
+                    <% for(var key in element) { %>
+                        <% if(element["item_level"] == '2') { %>
+                            <%= element["countNum"] %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            </td>
+
+            <td style="width:60px;">
+                <% resultc.forEach(element => { %>
+                    <% for(var key in element) { %>
+                        <% if(element["item_level"] == '3') { %>
+                            <%= element["countNum"] %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            </td>
+
+            <td style="width:60px;">
+                <% resultc.forEach(element => { %>
+                    <% for(var key in element) { %>
+                        <% if(element["item_level"] == '4') { %>
+                            <%= element["countNum"] %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            </td>
+
+            <td style="width:60px;">
+                <% resultc.forEach(element => { %>
+                    <% for(var key in element) { %>
+                        <% if(element["item_level"] == '5') { %>
+                            <%= element["countNum"] %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            </td>
+        </tr>
+    </table>
     <br>
     마우스를 올리면 사진을 볼 수 있습니다!<br><br>
     <div class="levelInfo">
@@ -73,9 +147,9 @@
                 <tr>
                 <% for(var key in element) { %>
                     <% if(element[key] == '1') { %>
-                            <td style='color: #2ECC71; width:100px;'>일반</td>
+                        <td style='color: #2ECC71; width:100px;'>일반</td>
                     <%  } else if(element[key] == '2') { %>
-                            <td style="width:100px;"><img src="/images/code/all/서사.jpg" alt=""></td>
+                        <td style="width:100px;"><img src="/images/code/all/서사.jpg" alt=""></td>
                     <% } else if(element[key] == '3') { %>
                         <td style="width:100px"><img src="/images/code/all/전설.jpg" alt=""></td>
                     <% }  else if(element[key] == '4') { %>
